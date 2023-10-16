@@ -47,7 +47,11 @@ const Sidebar = () => {
                   <NavLink 
                   to={`/${Link.name}`}
                   key={Link.name}
-                  onClick={()=>setActiveMenu(!activeMenu)}
+                  onClick={()=>setActiveMenu((preActionMenu) => (
+        !preActionMenu
+      )
+
+      )}
                   className={({isactive})=>
                   
                   isactive ? activeLink :
