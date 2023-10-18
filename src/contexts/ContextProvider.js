@@ -2,36 +2,40 @@ import React, { createContext, useContext, useState } from 'react';
 const StateContext = createContext();
 
 const initialState = {
-    chat: false,
-    cart: false,
-    userProfile: false,
-    notification: false,
-  };
-export const ContextProvider = ({children}) =>{
-const [activeMenu, setActiveMenu] = useState(true);
-const [isClicked, setIsClicked] = useState(initialState);
+  chat: false,
+  cart: false,
+  userProfile: false,
+  notification: false,
+};
+export const ContextProvider = ({ children }) => {
+  const [activeMenu, setActiveMenu] = useState(true);
+  const [isClicked, setIsClicked] = useState(initialState);
+  const [screenSize, setScreenSize] = useState(undefined);
 
-const handleClick = (clicked) =>{
-setIsClicked({...initialState,[clicked]:true})
-}
-return(
-<StateContext.Provider 
-value={{
-    activeMenu,
-    setActiveMenu,
-    isClicked, 
-    setIsClicked,
-    handleClick
-}}
->
+  const handleClick = (clicked) => {
+    setIsClicked({ ...initialState, [clicked]: true })
 
-{children}
-    
-</StateContext.Provider>
+  }
+  return (
+    <StateContext.Provider
+      value={{
+        activeMenu,
+        setActiveMenu,
+        isClicked,
+        setIsClicked,
+        handleClick,
+        screenSize,
+        setScreenSize
+      }}
+    >
 
-)
+      {children}
+
+    </StateContext.Provider>
+
+  )
 
 }
 //custom hook to be use in whole app where we call in any 
 // componenets through  StateContext which we create above
-export const useStateContext = () => useContext(StateContext) ;
+export const useStateContext = () => useContext(StateContext);

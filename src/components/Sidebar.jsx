@@ -10,9 +10,14 @@ import { useStateContext } from '../contexts/ContextProvider.js';
 
 const Sidebar = () => {
   
-  const {activeMenu,setActiveMenu} = useStateContext();
+  const {activeMenu,setActiveMenu, screenSize,
+  } = useStateContext();
 
-
+const handleCloseSideBar = () =>{
+  if(activeMenu && screenSize <= 900){
+   setActiveMenu(false)
+  }
+}
   const activeLink = 'flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg  text-white  text-md m-2';
   const normalLink = 'flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-md text-gray-700 dark:text-gray-200 dark:hover:text-black hover:bg-light-gray m-2';
 
@@ -21,7 +26,7 @@ const Sidebar = () => {
       {activeMenu && (
         <>
           <div className="flex justify-between items-center">
-            <Link to="/" className="items-center gap-3 ml-3 mt-4 flex text-xl font-extrabold tracking-tight dark:text-white text-slate-900">
+            <Link to="/"  onClick=handleCloseSideBar} className="items-center gap-3 ml-3 mt-4 flex text-xl font-extrabold tracking-tight dark:text-white text-slate-900">
               <FaShopware />
               <span>Shoppy</span>
             </Link>
@@ -43,26 +48,16 @@ const Sidebar = () => {
 
                   {item.title}
                 </p>
-                {item.links.map((Link)=>(
-                  <NavLink 
-                  to={`/${Link.name}`}
-                  key={Link.name}
-                  onClick={()=>setActiveMenu((preActionMenu) => (
-        !preActionMenu
-      )
-
-      )}
-                  className={({isactive})=>
-                  
-                  isactive ? activeLink :
-                  normalLink}
-                
+                {item.links.map((link) => (
+                  <NavLink
+                    to={`/${link.name}`}
+                    key={link.name}
+                    onClick={handleCloseSideBar}
+                   
+                    className={({ isActive }) => (isActive ? activeLink : normalLink)}
                   >
-                  {Link.icon}
-                  <span className='capitalize' >
-                    {Link.name}
-                  </span>
-
+                    {link.icon}
+                    <span className="capitalize ">{link.name}</span>
                   </NavLink>
                 ))}
               </div>
